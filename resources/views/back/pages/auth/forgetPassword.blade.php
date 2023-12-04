@@ -8,7 +8,7 @@ ForgetPassword
 <div class="login-header box-shadow">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="brand-logo">
-            <a href="login.html">
+            <a href="{{route('login')}}">
                 <img src="vendors/images/deskapp-logo.svg" alt="">
             </a>
         </div>
@@ -23,6 +23,15 @@ ForgetPassword
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                     <ul>
+                         @foreach ($errors->all() as $error)
+                             <li>{{ $error }}</li>
+                         @endforeach
+                    </ul>
+                 </div>
+            @endif
                 <img src="vendors/images/forgot-password.png" alt="">
             </div>
             <div class="col-md-6">
@@ -31,9 +40,10 @@ ForgetPassword
                         <h2 class="text-center text-primary">Forgot Password</h2>
                     </div>
                     <h6 class="mb-20">Enter your email address to reset your password</h6>
-                    <form>
+                    <form method="POST" action="{{route('forgetPasswordMail')}}">
+                    @csrf
                         <div class="input-group custom">
-                            <input type="text" class="form-control form-control-lg" placeholder="Email">
+                            <input type="text" name="email" value="{{ old('email') }}" required autofocus class="form-control form-control-lg" placeholder="Email">
                             <div class="input-group-append custom">
                                 <span class="input-group-text"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
                             </div>
@@ -41,11 +51,8 @@ ForgetPassword
                         <div class="row align-items-center">
                             <div class="col-5">
                                 <div class="input-group mb-0">
-                                    <!--
-                                        use code for form submit
                                         <input class="btn btn-primary btn-lg btn-block" type="submit" value="Submit">
-                                    -->
-                                    <a class="btn btn-primary btn-lg btn-block" href="index.html">Submit</a>
+                                    {{-- <a class="btn btn-primary btn-lg btn-block" href="index.html">Submit</a> --}}
                                 </div>
                             </div>
                             <div class="col-2">
